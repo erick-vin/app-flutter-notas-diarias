@@ -44,4 +44,11 @@ class AnotacaoHelper {
 
     return resultado;
   }
+
+  recuperarAnotacoes() async {
+    var bancoDados = await db;
+    String sql = "SELECT * FROM $nomeTabela ORDER BY data DESC";
+    List anotacoes = await bancoDados.rawQuery(sql);
+    return anotacoes;
+  }
 }
