@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:notasdiarias/helper/AnotacaoHelper.dart';
 
 import 'model/entities/Anotacao.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -84,6 +86,17 @@ class _HomeState extends State<Home> {
     _recuperarAnotacoes();
   }
 
+  _formatarData(String dataString) {
+    initializeDateFormatting("pt_BR");
+    //var formatador = DateFormat("d/MM/y H:m");
+    var formatador = DateFormat.yMMMd("pt_BR");
+
+    DateTime dataConvertida = DateTime.parse(dataString);
+    String dataFormatada = formatador.format(dataConvertida);
+
+    return dataFormatada;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
@@ -108,7 +121,7 @@ class _HomeState extends State<Home> {
                 child: ListTile(
                   title: Text(anotacao.titulo.toString()),
                   subtitle: Text(
-                      "${anotacao.data.toString()} - ${anotacao.descricao.toString()}"),
+                      "${_formatarData(anotacao.descricao.toString())} - ${anotacao.descricao.toString()}"),
                 ),
               );
             },
